@@ -5,28 +5,16 @@ import java.util.Collection;
 public class ClusterDTO {
 
     private Integer id;
+    private String name;  // Correspond à `name` dans la classe domaine
     private String description;
     private String type;
+    private String role;  // Ajouté pour correspondre à `role` dans la classe domaine
     private String status;
     private String location;
-    Collection<ServeurDTO> serveurs;
-    Collection<ApplicationDTO> applications;
+    private Collection<ServeurDTO> serveurs;
+    private Collection<ApplicationDTO> applications;
 
-    public Collection<ServeurDTO> getServeurs() {
-        return serveurs;
-    }
-
-    public void setServeurs(Collection<ServeurDTO> serveurs) {
-        this.serveurs = serveurs;
-    }
-
-    public Collection<ApplicationDTO> getApplications() {
-        return applications;
-    }
-
-    public void setApplications(Collection<ApplicationDTO> applications) {
-        this.applications = applications;
-    }
+    // Getters et Setters
 
     public Integer getId() {
         return id;
@@ -34,6 +22,14 @@ public class ClusterDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -52,6 +48,14 @@ public class ClusterDTO {
         this.type = type;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -66,5 +70,21 @@ public class ClusterDTO {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Collection<ServeurDTO> getServeurs() {
+        return serveurs;
+    }
+
+    public void setServeurs(Collection<ServeurDTO> serveurs) {
+        this.serveurs = serveurs;
+    }
+
+    public Collection<ApplicationDTO> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(Collection<ApplicationDTO> applications) {
+        this.applications = applications;
     }
 }

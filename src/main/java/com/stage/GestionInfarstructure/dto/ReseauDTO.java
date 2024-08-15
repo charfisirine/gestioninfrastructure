@@ -1,47 +1,32 @@
 package com.stage.GestionInfarstructure.dto;
 
-import java.util.Collection;
 import java.util.List;
 
 public class ReseauDTO {
 
-    private Integer id;
-    private String CIDRnotation;
-    private String masqueSousReseau;
+    private Integer idReseau;
+    private String name;  // Correspond à `name` dans la classe domaine
     private String ipRange;
-    private String gateway;
-    private Collection<SousReseauDTO> sousReseaux;
+    private String typeReseau;  // Correspond à `typeReseau` dans la classe domaine
+    private List<SousReseauDTO> sousReseaux;  // Utilisation de `List` pour correspondre à la classe domaine
 
-    public Integer getId() {
-        return id;
+    // Getters et Setters
+
+
+    public Integer getIdReseau() {
+        return idReseau;
     }
 
-    public Collection<SousReseauDTO> getSousReseaux() {
-        return sousReseaux;
+    public void setIdReseau(Integer idReseau) {
+        this.idReseau = idReseau;
     }
 
-    public void setSousReseaux(Collection<SousReseauDTO> sousReseaux) {
-        this.sousReseaux = sousReseaux;
+    public String getName() {
+        return name;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCIDRnotation() {
-        return CIDRnotation;
-    }
-
-    public void setCIDRnotation(String CIDRnotation) {
-        this.CIDRnotation = CIDRnotation;
-    }
-
-    public String getMasqueSousReseau() {
-        return masqueSousReseau;
-    }
-
-    public void setMasqueSousReseau(String masqueSousReseau) {
-        this.masqueSousReseau = masqueSousReseau;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getIpRange() {
@@ -52,11 +37,19 @@ public class ReseauDTO {
         this.ipRange = ipRange;
     }
 
-    public String getGateway() {
-        return gateway;
+    public String getTypeReseau() {
+        return typeReseau;
     }
 
-    public void setGateway(String gateway) {
-        this.gateway = gateway;
+    public void setTypeReseau(String typeReseau) {
+        this.typeReseau = typeReseau;
+    }
+
+    public List<SousReseauDTO> getSousReseaux() {
+        return sousReseaux;
+    }
+
+    public void setSousReseaux(List<SousReseauDTO> sousReseaux) {
+        this.sousReseaux = sousReseaux;
     }
 }

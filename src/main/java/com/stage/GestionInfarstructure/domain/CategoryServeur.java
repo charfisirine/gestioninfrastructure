@@ -1,7 +1,6 @@
 package com.stage.GestionInfarstructure.domain;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
@@ -16,21 +15,8 @@ public class CategoryServeur implements Serializable {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "categorServeur", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "categoryServeur", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Collection<Serveur> serveurs;
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CategoryServeur that)) return false;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
 
     public CategoryServeur() {
     }
@@ -57,5 +43,25 @@ public class CategoryServeur implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Collection<Serveur> getServeurs() {
+        return serveurs;
+    }
+
+    public void setServeurs(Collection<Serveur> serveurs) {
+        this.serveurs = serveurs;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CategoryServeur that)) return false;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

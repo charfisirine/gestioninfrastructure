@@ -1,7 +1,6 @@
 package com.stage.GestionInfarstructure.domain;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
@@ -16,7 +15,6 @@ public class Serveur implements Serializable {
     private String hostName;
     private String addressIp;
     private String status;
-    private String categoryServerId;
     private String specification;
 
     @ManyToOne
@@ -27,49 +25,19 @@ public class Serveur implements Serializable {
     @JoinColumn(name = "clusterId")
     private Cluster cluster;
 
-    public Cluster getCluster() {
-        return cluster;
-    }
-
-    public Collection<Application> getApplications() {
-        return applications;
-    }
-
-    public void setApplications(Collection<Application> applications) {
-        this.applications = applications;
-    }
+    @ManyToOne
+    @JoinColumn(name = "sousReseauId")  // Assurez-vous que `sousReseauId` est la clé étrangère correcte
+    private SousReseau sousReseau;
 
     @ManyToMany
     @JoinTable(
-            name = "Application",
+            name = "Application_Serveur",
             joinColumns = @JoinColumn(name = "serveurId"),
-            inverseJoinColumns = @JoinColumn(name = "ApplicationId")
+            inverseJoinColumns = @JoinColumn(name = "applicationId")
     )
     private Collection<Application> applications;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Serveur serveur)) return false;
-        return Objects.equals(id, serveur.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
-
-    public void setCluster(Cluster cluster) {
-        this.cluster = cluster;
-    }
-
-    public CategoryServeur getCategoryServeur() {
-        return categoryServeur;
-    }
-
-    public void setCategoryServeur(CategoryServeur categoryServeur) {
-        this.categoryServeur = categoryServeur;
-    }
+    // Getters et setters
 
     public Serveur() {
     }
@@ -106,19 +74,55 @@ public class Serveur implements Serializable {
         this.status = status;
     }
 
-    public String getCategoryServerId() {
-        return categoryServerId;
-    }
-
-    public void setCategoryServerId(String categoryServerId) {
-        this.categoryServerId = categoryServerId;
-    }
-
     public String getSpecification() {
         return specification;
     }
 
     public void setSpecification(String specification) {
         this.specification = specification;
+    }
+
+    public CategoryServeur getCategoryServeur() {
+        return categoryServeur;
+    }
+
+    public void setCategoryServeur(CategoryServeur categoryServeur) {
+        this.categoryServeur = categoryServeur;
+    }
+
+    public Cluster getCluster() {
+        return cluster;
+    }
+
+    public void setCluster(Cluster cluster) {
+        this.cluster = cluster;
+    }
+
+    public SousReseau getSousReseau() {
+        return sousReseau;
+    }
+
+    public void setSousReseau(SousReseau sousReseau) {
+        this.sousReseau = sousReseau;
+    }
+
+    public Collection<Application> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(Collection<Application> applications) {
+        this.applications = applications;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Serveur serveur)) return false;
+        return Objects.equals(id, serveur.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

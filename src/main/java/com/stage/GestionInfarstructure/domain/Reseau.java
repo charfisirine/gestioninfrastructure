@@ -3,6 +3,7 @@ package com.stage.GestionInfarstructure.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ public class Reseau implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idReseau;
 
     private String name;
 
@@ -19,11 +20,9 @@ public class Reseau implements Serializable {
 
     private String typeReseau;
 
-    @OneToMany(mappedBy = "reseau", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "reseau",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval=true)
     @JsonIgnore
-    private List<sousReseau> sousReseaux;
-
-
+    private Collection<SousReseau> sousReseaux;
 
     public Reseau() {
     }
@@ -32,20 +31,20 @@ public class Reseau implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Reseau reseau)) return false;
-        return Objects.equals(id, reseau.id);
+        return Objects.equals(idReseau, reseau.idReseau);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(idReseau);
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdReseau() {
+        return idReseau;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdReseau(Integer idReseau) {
+        this.idReseau = idReseau;
     }
 
     public String getName() {
@@ -72,11 +71,11 @@ public class Reseau implements Serializable {
         this.typeReseau = typeReseau;
     }
 
-    public List<sousReseau> getSousReseaux() {
+    public Collection<SousReseau> getSousReseaux() {
         return sousReseaux;
     }
 
-    public void setSousReseaux(List<sousReseau> sousReseaux) {
+    public void setSousReseaux(Collection<SousReseau> sousReseaux) {
         this.sousReseaux = sousReseaux;
     }
 }

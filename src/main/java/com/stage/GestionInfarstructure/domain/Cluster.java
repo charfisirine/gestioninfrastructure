@@ -17,11 +17,19 @@ public class Cluster implements Serializable {
     @Column(name = "clusterId") // Nom de la colonne dans la base de données
     private Integer id;
 
+    @Column(name = "name", nullable = false)
+    private String name;
+
     @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "type", nullable = false)
     private String type;
+
+
+
+    @Column(name = "role", nullable = false)
+    private String role;
 
     @Column(name = "status", nullable = false)
     private String status;
@@ -40,7 +48,21 @@ public class Cluster implements Serializable {
 
     public Cluster() {
     }
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
     public Integer getId() {
         return id;
     }

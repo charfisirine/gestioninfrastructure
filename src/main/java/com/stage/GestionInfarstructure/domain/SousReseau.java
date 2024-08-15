@@ -2,53 +2,49 @@ package com.stage.GestionInfarstructure.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class sousReseau implements Serializable {
-
+public class SousReseau implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idSousReseau;
 
-    private String reseauId;
+    @Column(insertable = false, updatable = false)
+    private Integer idReseau;
+
     private String CIDRnotation;
     private String masqueSousReseau;
     private String ipRange;
     private String gateway;
 
-    public sousReseau() {
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "reseauId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idReseau")
     private Reseau reseau;
-
 
     @OneToMany(mappedBy = "sousReseau", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore
     private Collection<Serveur> serveurs;
 
+    // Getters et setters
 
 
-
-    public Integer getId() {
-        return id;
+    public Integer getIdSousReseau() {
+        return idSousReseau;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdSousReseau(Integer idSousReseau) {
+        this.idSousReseau = idSousReseau;
     }
 
-    public String getReseauId() {
-        return reseauId;
+    public Integer getIdReseau() {
+        return idReseau;
     }
 
-    public void setReseauId(String reseauId) {
-        this.reseauId = reseauId;
+    public void setIdReseau(Integer idReseau) {
+        this.idReseau = idReseau;
     }
 
     public String getCIDRnotation() {
@@ -82,6 +78,7 @@ public class sousReseau implements Serializable {
     public void setGateway(String gateway) {
         this.gateway = gateway;
     }
+
     public Reseau getReseau() {
         return reseau;
     }
@@ -101,12 +98,12 @@ public class sousReseau implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof sousReseau that)) return false;
-        return Objects.equals(id, that.id);
+        if (!(o instanceof SousReseau that)) return false;
+        return Objects.equals(idSousReseau, that.idSousReseau);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(idSousReseau);
     }
 }

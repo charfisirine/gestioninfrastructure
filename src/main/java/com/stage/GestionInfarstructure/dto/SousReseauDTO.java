@@ -4,35 +4,47 @@ import java.util.Collection;
 
 public class SousReseauDTO {
 
-    private Integer id;
-    private String description;
-    private String ipRange;
+    private Integer idSousReseau;
+    private Integer idReseau;  // Ajouté pour correspondre à `idReseau` dans la classe domaine
+    private String CIDRnotation;  // Ajouté pour correspondre à `CIDRnotation` dans la classe domaine
     private String masqueSousReseau;
+    private String ipRange;
+    private String gateway;  // Ajouté pour correspondre à `gateway` dans la classe domaine
     private Collection<ServeurDTO> serveurs;
 
-    public Collection<ServeurDTO> getServeurs() {
-        return serveurs;
-    }
-
-    public void setServeurs(Collection<ServeurDTO> serveurs) {
-        this.serveurs = serveurs;
-    }
-
     // Getters and Setters
-    public Integer getId() {
-        return id;
+
+
+    public Integer getIdSousReseau() {
+        return idSousReseau;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdSousReseau(Integer idSousReseau) {
+        this.idSousReseau = idSousReseau;
     }
 
-    public String getDescription() {
-        return description;
+    public Integer getIdReseau() {
+        return idReseau;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setIdReseau(Integer idReseau) {
+        this.idReseau = idReseau;
+    }
+
+    public String getCIDRnotation() {
+        return CIDRnotation;
+    }
+
+    public void setCIDRnotation(String CIDRnotation) {
+        this.CIDRnotation = CIDRnotation;
+    }
+
+    public String getMasqueSousReseau() {
+        return masqueSousReseau;
+    }
+
+    public void setMasqueSousReseau(String masqueSousReseau) {
+        this.masqueSousReseau = masqueSousReseau;
     }
 
     public String getIpRange() {
@@ -43,11 +55,19 @@ public class SousReseauDTO {
         this.ipRange = ipRange;
     }
 
-    public String getMasqueSousReseau() {
-        return masqueSousReseau;
+    public String getGateway() {
+        return gateway;
     }
 
-    public void setMasqueSousReseau(String masqueSousReseau) {
-        this.masqueSousReseau = masqueSousReseau;
+    public void setGateway(String gateway) {
+        this.gateway = gateway;
+    }
+
+    public Collection<ServeurDTO> getServeurs() {
+        return serveurs;
+    }
+
+    public void setServeurs(Collection<ServeurDTO> serveurs) {
+        this.serveurs = serveurs;
     }
 }
