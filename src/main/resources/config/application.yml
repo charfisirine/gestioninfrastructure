@@ -1,0 +1,37 @@
+server:
+  port: 9500
+  address: localhost
+spring:
+  application:
+    name: gestioninfrastructure
+    # devtools outils mte3 spring boot bech kif ta3mil modifier lil application ta93adch t3awid ta3mil run
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/gestioninfrastructure
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    # database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+
+
+  liquibase:
+    enabled: false
+
+
+  delete-article-without-check: true
+  delete-depot-without-check: true
+  delete-stock-without-check: true
