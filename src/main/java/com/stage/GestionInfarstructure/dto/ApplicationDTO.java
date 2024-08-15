@@ -7,11 +7,34 @@ public class ApplicationDTO {
     private Integer id;
     private String name;
     private String description;
-    private Integer categoryApplId;
     private String lienAcces;
-    private Integer serveurId;
     Collection<ServeurDTO> serveurs;
     Collection<ClusterDTO> clusters;
+    private CategoryAppDTO categoryApp;
+
+    public Collection<ServeurDTO> getServeurs() {
+        return serveurs;
+    }
+
+    public void setServeurs(Collection<ServeurDTO> serveurs) {
+        this.serveurs = serveurs;
+    }
+
+    public Collection<ClusterDTO> getClusters() {
+        return clusters;
+    }
+
+    public void setClusters(Collection<ClusterDTO> clusters) {
+        this.clusters = clusters;
+    }
+
+    public CategoryAppDTO getCategoryApp() {
+        return categoryApp;
+    }
+
+    public void setCategoryApp(CategoryAppDTO categoryApp) {
+        this.categoryApp = categoryApp;
+    }
 
     public Integer getId() {
         return id;
@@ -36,15 +59,6 @@ public class ApplicationDTO {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public Integer getCategoryApplId() {
-        return categoryApplId;
-    }
-
-    public void setCategoryApplId(Integer categoryApplId) {
-        this.categoryApplId = categoryApplId;
-    }
-
     public String getLienAcces() {
         return lienAcces;
     }
@@ -53,11 +67,4 @@ public class ApplicationDTO {
         this.lienAcces = lienAcces;
     }
 
-    public Integer getServeurId() {
-        return serveurId;
-    }
-
-    public void setServeurId(Integer serveurId) {
-        this.serveurId = serveurId;
-    }
 }

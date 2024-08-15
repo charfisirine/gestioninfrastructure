@@ -1,13 +1,43 @@
 package com.stage.GestionInfarstructure.dto;
 
+import com.stage.GestionInfarstructure.domain.CategoryServeur;
+
+import java.util.Collection;
+
 public class ServeurDTO {
 
     private Integer id;
     private String hostName;
     private String adresseIp;
     private String status;
-    private Integer categoryServeurId;
+    private CategoryServeurDTO categoryServeur;
     private String specification;
+    private Collection<ApplicationDTO> applications;
+    private ClusterDTO clusters;
+
+    public CategoryServeurDTO getCategoryServeur() {
+        return categoryServeur;
+    }
+
+    public void setCategoryServeur(CategoryServeurDTO categoryServeur) {
+        this.categoryServeur = categoryServeur;
+    }
+
+    public Collection<ApplicationDTO> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(Collection<ApplicationDTO> applications) {
+        this.applications = applications;
+    }
+
+    public ClusterDTO getClusters() {
+        return clusters;
+    }
+
+    public void setClusters(ClusterDTO clusters) {
+        this.clusters = clusters;
+    }
 
     public Integer getId() {
         return id;
@@ -39,14 +69,6 @@ public class ServeurDTO {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Integer getCategoryServeurId() {
-        return categoryServeurId;
-    }
-
-    public void setCategoryServeurId(Integer categoryServeurId) {
-        this.categoryServeurId = categoryServeurId;
     }
 
     public String getSpecification() {

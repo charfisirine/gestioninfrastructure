@@ -1,11 +1,22 @@
 package com.stage.GestionInfarstructure.dto;
 
+import java.util.Collection;
+
 public class SousReseauDTO {
 
     private Integer id;
     private String description;
     private String ipRange;
     private String masqueSousReseau;
+    private Collection<ServeurDTO> serveurs;
+
+    public Collection<ServeurDTO> getServeurs() {
+        return serveurs;
+    }
+
+    public void setServeurs(Collection<ServeurDTO> serveurs) {
+        this.serveurs = serveurs;
+    }
 
     // Getters and Setters
     public Integer getId() {

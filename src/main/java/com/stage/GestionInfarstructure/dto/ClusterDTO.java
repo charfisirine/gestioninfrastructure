@@ -1,5 +1,7 @@
 package com.stage.GestionInfarstructure.dto;
 
+import java.util.Collection;
+
 public class ClusterDTO {
 
     private Integer id;
@@ -7,6 +9,24 @@ public class ClusterDTO {
     private String type;
     private String status;
     private String location;
+    Collection<ServeurDTO> serveurs;
+    Collection<ApplicationDTO> applications;
+
+    public Collection<ServeurDTO> getServeurs() {
+        return serveurs;
+    }
+
+    public void setServeurs(Collection<ServeurDTO> serveurs) {
+        this.serveurs = serveurs;
+    }
+
+    public Collection<ApplicationDTO> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(Collection<ApplicationDTO> applications) {
+        this.applications = applications;
+    }
 
     public Integer getId() {
         return id;
