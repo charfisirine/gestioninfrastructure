@@ -1,5 +1,7 @@
 package com.stage.GestionInfarstructure.dto;
 
+import java.util.Collection;
+
 public class ApplicationDTO {
 
     private Integer id;
@@ -8,6 +10,8 @@ public class ApplicationDTO {
     private Integer categoryApplId;
     private String lienAcces;
     private Integer serveurId;
+    Collection<ServeurDTO> serveurs;
+    Collection<ClusterDTO> clusters;
 
     public Integer getId() {
         return id;

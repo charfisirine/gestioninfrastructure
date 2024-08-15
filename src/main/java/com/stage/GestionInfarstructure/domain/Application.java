@@ -22,9 +22,14 @@ public class Application implements Serializable {
     @JoinColumn(name = "categoryApplId")
     private CategoryApp categoryApp; // Relation Many-to-One avec CategoryApplication
 
-    @ManyToOne
-    @JoinColumn(name = "serveurId")
-    private Serveur serveur; // Relation Many-to-One avec Serveur
+    @ManyToMany
+    @JoinTable(
+            name = "serveur",
+            joinColumns = @JoinColumn(name = "applicationId"),
+            inverseJoinColumns = @JoinColumn(name = "serveurId")
+    )
+    private Collection<Serveur> serveur;
+
 
 
     @ManyToMany
@@ -33,7 +38,7 @@ public class Application implements Serializable {
             joinColumns = @JoinColumn(name = "applicationId"),
             inverseJoinColumns = @JoinColumn(name = "clusterId")
     )
-    private Collection<Cluster> clusters; // Relation Many-to-Many avec Cluster
+    private Collection<Cluster> clusters;
 
     public Application() {
     }
@@ -102,11 +107,11 @@ public class Application implements Serializable {
         this.categoryApp = categoryApp;
     }
 
-    public Serveur getServeur() {
+    public Collection<Serveur> getServeur() {
         return serveur;
     }
 
-    public void setServeur(Serveur serveur) {
+    public void setServeur(Collection<Serveur> serveur) {
         this.serveur = serveur;
     }
 }
