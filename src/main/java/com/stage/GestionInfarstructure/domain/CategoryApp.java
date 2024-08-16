@@ -30,7 +30,7 @@ public class CategoryApp implements Serializable {
     }
 
     @OneToMany(mappedBy = "categoryApp", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Collection<Application> applications; // Relation One-to-Many avec Application
+    private Collection<Application> applications;
 
 
     public CategoryApp() {

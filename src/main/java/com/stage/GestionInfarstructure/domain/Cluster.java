@@ -4,18 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Cluster implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "clusterId") // Nom de la colonne dans la base de données
-    private Integer id;
+    @Column(name = "clusterId")
+    private Integer clusterId;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -37,9 +34,13 @@ public class Cluster implements Serializable {
     @Column(name = "location", nullable = false)
     private String location;
 
-    @ManyToMany(mappedBy = "clusters")
-    private Collection<Application> applications; // Relation Many-to-Many avec Application
-
+    @ManyToMany
+    @JoinTable(
+            name = "cluster_application",
+            joinColumns = @JoinColumn(name = "clusterId"),
+            inverseJoinColumns = @JoinColumn(name = "applicationId")
+    )
+    private Collection<Application> applications ;
 
     @OneToMany(mappedBy = "cluster", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore
@@ -63,9 +64,6 @@ public class Cluster implements Serializable {
     public void setRole(String role) {
         this.role = role;
     }
-    public Integer getId() {
-        return id;
-    }
 
     public Collection<Application> getApplications() {
         return applications;
@@ -83,9 +81,7 @@ public class Cluster implements Serializable {
         this.applications = applications;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+
 
     public String getDescription() {
         return description;
@@ -112,12 +108,12 @@ public class Cluster implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Cluster cluster)) return false;
-        return Objects.equals(id, cluster.id);
+        return Objects.equals(clusterId, cluster.clusterId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(clusterId);
     }
 
 
@@ -132,5 +128,13 @@ public class Cluster implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Integer getClusterId() {
+        return clusterId;
+    }
+
+    public void setClusterId(Integer clusterId) {
+        this.clusterId = clusterId;
     }
 }

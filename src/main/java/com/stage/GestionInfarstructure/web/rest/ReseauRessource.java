@@ -1,4 +1,4 @@
-package com.stage.GestionInfarstructure.rest;
+package com.stage.GestionInfarstructure.web.rest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -23,9 +23,8 @@ import com.stage.GestionInfarstructure.domain.Reseau;
 import com.stage.GestionInfarstructure.dto.ReseauDTO;
 
 @RestController
-@RequestMapping("/api/reseaus")
+@RequestMapping("/api/reseaux")
 public class ReseauRessource {
-   // @Autowired
      private final ReseauService reseauService;
      private static final String ENTITY_NAME = "Reseau";
 
@@ -55,7 +54,7 @@ public class ReseauRessource {
             throw new MethodArgumentNotValidException(null, bindingResults);
         }
         ReseauDTO result = reseauService.add(reseau);
-        return ResponseEntity.created(new URI("/api/reseaus/" + result.getIdReseau())).body(result);
+        return ResponseEntity.created(new URI("/api/reseaux/" + result.getIdReseau())).body(result);
     }
 
 

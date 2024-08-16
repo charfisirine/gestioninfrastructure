@@ -7,13 +7,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {   
+public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/api/*/**")
-                        .permitAll());
+                .authorizeHttpRequests(authorize -> authorize
+                        .anyRequest().permitAll()
+                );
         return httpSecurity.build();
     }
+
 }

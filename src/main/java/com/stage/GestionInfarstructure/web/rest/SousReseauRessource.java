@@ -1,4 +1,4 @@
-package com.stage.GestionInfarstructure.rest;
+package com.stage.GestionInfarstructure.web.rest;
 
 
 import com.stage.GestionInfarstructure.dto.SousReseauDTO;
@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/api/sousreseaus")
+@RequestMapping("/api/sousreseaux")
 public class SousReseauRessource {
 
     @Autowired
@@ -47,7 +47,7 @@ public class SousReseauRessource {
         }
 
         SousReseauDTO result = sousReseauService.add(sousReseau);
-        return ResponseEntity.created(new URI("/api/sousReseaus/" + result.getIdSousReseau())).body(result);
+        return ResponseEntity.created(new URI("/api/sousreseaux/" + result.getIdSousReseau())).body(result);
     }
 
     @PutMapping("/{id}")

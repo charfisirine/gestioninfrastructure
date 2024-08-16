@@ -16,13 +16,13 @@ public class ReseauMapping {
         reseau.setIpRange(reseauDTO.getIpRange());
         reseau.setTypeReseau(reseauDTO.getTypeReseau());
 
-        Collection<SousReseau> sousreseaus = new ArrayList<>();
+        Collection<SousReseau> sousreseaux = new ArrayList<>();
         for (SousReseauDTO sousReseauDTO : reseauDTO.getSousReseaux()) {
             SousReseau sousreseau = SousReseauMapping.sousReseauDTOTOSousReseau(sousReseauDTO);
-            sousreseaus.add(sousreseau);
+            sousreseaux.add(sousreseau);
             sousreseau.setReseau(reseau);
         }
-        reseau.setSousReseaux(sousreseaus);
+        reseau.setSousReseaux(sousreseaux);
         return reseau;
     }
 

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ public class Application implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer applicationId;
 
     private String name;
     private String description;
@@ -20,25 +21,20 @@ public class Application implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "categoryApplId")
-    private CategoryApp categoryApp; // Relation Many-to-One avec CategoryApplication
+    private CategoryApp categoryApp;
 
     @ManyToMany
     @JoinTable(
-            name = "serveur",
+            name = "Serveur_Application",
             joinColumns = @JoinColumn(name = "applicationId"),
             inverseJoinColumns = @JoinColumn(name = "serveurId")
     )
-    private Collection<Serveur> serveur;
+    private Collection<Serveur> serveurs;
 
 
+    @ManyToMany(mappedBy = "applications")
+    private Collection<Cluster> cluster;
 
-    @ManyToMany
-    @JoinTable(
-            name = "cluster",
-            joinColumns = @JoinColumn(name = "applicationId"),
-            inverseJoinColumns = @JoinColumn(name = "clusterId")
-    )
-    private Collection<Cluster> clusters;
 
     public Application() {
     }
@@ -47,20 +43,20 @@ public class Application implements Serializable {
         this.categoryApp = categoryApp;
     }
 
-    public Collection<Cluster> getClusters() {
-        return clusters;
+    public Collection<Cluster> getCluster() {
+        return cluster;
     }
 
-    public void setClusters(Collection<Cluster> clusters) {
-        this.clusters = clusters;
+    public void setCluster(Collection<Cluster> cluster) {
+        this.cluster = cluster;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getApplicationId() {
+        return applicationId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setApplicationId(Integer applicationId) {
+        this.applicationId = applicationId;
     }
 
     public String getName() {
@@ -71,12 +67,12 @@ public class Application implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Application that)) return false;
-        return Objects.equals(id, that.id);
+        return Objects.equals(applicationId, that.applicationId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(applicationId);
     }
 
     public void setName(String name) {
@@ -107,11 +103,11 @@ public class Application implements Serializable {
         this.categoryApp = categoryApp;
     }
 
-    public Collection<Serveur> getServeur() {
-        return serveur;
+    public Collection<Serveur> getServeurs() {
+        return serveurs;
     }
 
-    public void setServeur(Collection<Serveur> serveur) {
-        this.serveur = serveur;
+    public void setServeurs(Collection<Serveur> serveurs) {
+        this.serveurs = serveurs;
     }
 }

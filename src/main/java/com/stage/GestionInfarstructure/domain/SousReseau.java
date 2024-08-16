@@ -22,7 +22,9 @@ public class SousReseau implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idReseau")
+
     private Reseau reseau;
+
 
     @OneToMany(mappedBy = "sousReseau", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore

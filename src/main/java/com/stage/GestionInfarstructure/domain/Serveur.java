@@ -10,7 +10,7 @@ public class Serveur implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer serveurId;
 
     private String hostName;
     private String addressIp;
@@ -26,29 +26,31 @@ public class Serveur implements Serializable {
     private Cluster cluster;
 
     @ManyToOne
-    @JoinColumn(name = "sousReseauId")  // Assurez-vous que `sousReseauId` est la clé étrangère correcte
+    @JoinColumn(name = "idSousReseau")
     private SousReseau sousReseau;
+
+    public Integer getServeurId() {
+        return serveurId;
+    }
+
+    public void setServeurId(Integer serveurId) {
+        this.serveurId = serveurId;
+    }
 
     @ManyToMany
     @JoinTable(
-            name = "Application_Serveur",
+            name = "Serveur_Application",
             joinColumns = @JoinColumn(name = "serveurId"),
             inverseJoinColumns = @JoinColumn(name = "applicationId")
     )
     private Collection<Application> applications;
+
 
     // Getters et setters
 
     public Serveur() {
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getHostName() {
         return hostName;
@@ -118,11 +120,11 @@ public class Serveur implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Serveur serveur)) return false;
-        return Objects.equals(id, serveur.id);
+        return Objects.equals(serveurId, serveur.serveurId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(serveurId);
     }
 }

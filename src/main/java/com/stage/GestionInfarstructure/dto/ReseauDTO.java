@@ -1,5 +1,7 @@
 package com.stage.GestionInfarstructure.dto;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ReseauDTO {
@@ -8,7 +10,7 @@ public class ReseauDTO {
     private String name;  // Correspond à `name` dans la classe domaine
     private String ipRange;
     private String typeReseau;  // Correspond à `typeReseau` dans la classe domaine
-    private List<SousReseauDTO> sousReseaux;  // Utilisation de `List` pour correspondre à la classe domaine
+    private Collection<SousReseauDTO> sousReseaux= new ArrayList<>();;  // Utilisation de `List` pour correspondre à la classe domaine
 
     // Getters et Setters
 
@@ -45,11 +47,14 @@ public class ReseauDTO {
         this.typeReseau = typeReseau;
     }
 
-    public List<SousReseauDTO> getSousReseaux() {
+    public Collection<SousReseauDTO> getSousReseaux() {
+        if (sousReseaux == null) {
+            sousReseaux = new ArrayList<>();
+        }
         return sousReseaux;
     }
 
-    public void setSousReseaux(List<SousReseauDTO> sousReseaux) {
+    public void setSousReseaux(Collection<SousReseauDTO> sousReseaux) {
         this.sousReseaux = sousReseaux;
     }
 }
