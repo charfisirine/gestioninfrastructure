@@ -1,15 +1,16 @@
 package com.stage.GestionInfarstructure.dto;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class ApplicationDTO {
 
-    private Integer id;
+    private Integer applicationId;
     private String name;
     private String description;
     private String lienAcces;
-    Collection<ServeurDTO> serveurs;
-    Collection<ClusterDTO> clusters;
+    private Collection<ServeurDTO> serveurs = Collections.emptyList();
+    private Collection<ClusterDTO> clusters = Collections.emptyList();
     private CategoryAppDTO categoryApp;
 
     public Collection<ServeurDTO> getServeurs() {
@@ -36,12 +37,12 @@ public class ApplicationDTO {
         this.categoryApp = categoryApp;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getApplicationId() {
+        return applicationId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setApplicationId(Integer applicationId) {
+        this.applicationId = applicationId;
     }
 
     public String getName() {
@@ -59,6 +60,7 @@ public class ApplicationDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+
     public String getLienAcces() {
         return lienAcces;
     }
@@ -66,5 +68,4 @@ public class ApplicationDTO {
     public void setLienAcces(String lienAcces) {
         this.lienAcces = lienAcces;
     }
-
 }

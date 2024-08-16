@@ -1,43 +1,53 @@
 package com.stage.GestionInfarstructure.service;
 
-
-import com.stage.GestionInfarstructure.domain.Application;
 import com.stage.GestionInfarstructure.domain.Cluster;
-import com.stage.GestionInfarstructure.repository.ApplicationRepository;
+import com.stage.GestionInfarstructure.dto.ClusterDTO;
+import com.stage.GestionInfarstructure.mapping.ClusterMapping;
 import com.stage.GestionInfarstructure.repository.ClusterRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.HashSet;
 
 @Service
+@Transactional
 public class ClusterService {
 
-    @Autowired
-    private ClusterRepository clusterRepository;
+    private final ClusterRepository clusterRepository;
 
-    @Autowired
-    private ApplicationRepository applicationRepository;
-
-    @Transactional
-    public void addApplicationsToCluster(Integer clusterId, Collection<Integer> applicationIds) {
-        // Find the cluster by ID
-
-        Cluster cluster = clusterRepository.findById(clusterId)
-                .orElseThrow(() -> new RuntimeException("Cluster not found"));
-
-        // Find the applications by their IDs
-
-        Collection<Application> applications = applicationRepository.findAllById(applicationIds);
-        // Set the applications to the cluster
-
-        cluster.setApplications(new HashSet<>(applications));
-        // Save the updated cluster
-
-        clusterRepository.save(cluster);
+    public ClusterService(ClusterRepository clusterRepository) {
+        this.clusterRepository = clusterRepository;
     }
 
-}
+    @Transactional(readOnly = true)
+    public ClusterDTO findOne(Integer id) {
+        Cluster cluster = clusterRepository.findById(id).orElse(null);
+        return ClusterMapping.clusterToClusterDTO(cluster);
+    }
 
+    @Transactional(readOnly = true)
+    public Collection<ClusterDTO> findAll() {
+        Collection<Cluster> result = clusterRepository.findAll();
+        return ClusterMapping.clustersToClusterDTOs(result);
+    }
+
+    public ClusterDTO add(ClusterDTO clusterDTO) {
+        Cluster cluster = ClusterMapping.clusterDTOToCluster(clusterDTO);
+        cluster = clusterRepository.save(cluster);
+        return ClusterMapping.clusterToClusterDTO(cluster);
+    }
+
+    public ClusterDTO update(ClusterDTO clusterDTO) {
+        Cluster clusterInBase = clusterRepository.findById(clusterDTO.getId()).orElse(null);
+        Preconditions.checkArgument(clusterInBase != null, "Cluster has been deleted");
+
+        Cluster cluster = ClusterMapping.clusterDTOToCluster(clusterDTO);
+        cluster = clusterRepository.save(cluster);
+        return ClusterMapping.clusterToClusterDTO(cluster);
+    }
+
+    public void deleteCluster(Integer id) {
+        clusterRepository.deleteById(id);
+    }
+}

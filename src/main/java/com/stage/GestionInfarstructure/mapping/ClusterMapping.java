@@ -24,20 +24,24 @@ public class ClusterMapping {
         cluster.setStatus(clusterDTO.getStatus());
         cluster.setLocation(clusterDTO.getLocation());
 
-        // Map the applications
+        // Initialize applications if null
         Collection<Application> applications = new ArrayList<>();
-        for (ApplicationDTO applicationDTO : clusterDTO.getApplications()) {
-            Application application = ApplicationMapping.applicationDTOTOApplication(applicationDTO);
-            applications.add(application);
+        if (clusterDTO.getApplications() != null) {
+            for (ApplicationDTO applicationDTO : clusterDTO.getApplications()) {
+                Application application = ApplicationMapping.applicationDTOTOApplication(applicationDTO);
+                applications.add(application);
+            }
         }
         cluster.setApplications(applications);
 
-        // Map the serveurs
+        // Initialize serveurs if null
         Collection<Serveur> serveurs = new ArrayList<>();
-        for (ServeurDTO serveurDTO : clusterDTO.getServeurs()) {
-            Serveur serveur = ServeurMapping.serveurDTOTOServeur(serveurDTO);
-            serveurs.add(serveur);
-            serveur.setCluster(cluster); // Set the cluster reference in Serveur
+        if (clusterDTO.getServeurs() != null) {
+            for (ServeurDTO serveurDTO : clusterDTO.getServeurs()) {
+                Serveur serveur = ServeurMapping.serveurDTOTOServeur(serveurDTO);
+                serveurs.add(serveur);
+                serveur.setCluster(cluster); // Set the cluster reference in Serveur
+            }
         }
         cluster.setServeurs(serveurs);
 

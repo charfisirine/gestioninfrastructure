@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public class ServeurDTO {
 
-    private Integer id;
+    private Integer serveurId;
     private String hostName;
     private String adresseIp;
     private String status;
@@ -39,12 +39,12 @@ public class ServeurDTO {
         this.clusters = clusters;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getServeurId() {
+        return serveurId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setServeurId(Integer serveurId) {
+        this.serveurId = serveurId;
     }
 
     public String getHostName() {

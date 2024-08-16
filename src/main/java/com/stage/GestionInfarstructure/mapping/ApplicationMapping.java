@@ -15,39 +15,45 @@ import java.util.List;
 
 public class ApplicationMapping {
 
-    public static Application applicationDTOTOApplication(ApplicationDTO applicationDTO) {
+    // Convert ApplicationDTO to Application
+    public static Application applicationDTOToApplication(ApplicationDTO applicationDTO) {
         Application application = new Application();
-        application.setApplicationId(applicationDTO.getId());
+        application.setApplicationId(applicationDTO.getApplicationId());
         application.setName(applicationDTO.getName());
         application.setDescription(applicationDTO.getDescription());
         application.setLienAccees(applicationDTO.getLienAcces());
 
-        if (ApplicationDTO.getCategoryApp() != null) {
-            CategoryApp categoryApp = CategoryAppMapping.categoryAppToCategoryAppDTO(ApplicationDTO.getCategoryApp());
+        if (applicationDTO.getCategoryApp() != null) {
+            CategoryApp categoryApp = CategoryAppMapping.categoryAppDTOToCategoryApp(applicationDTO.getCategoryApp());
             application.setCategoryApp(categoryApp);
         }
 
         Collection<Serveur> serveurs = new ArrayList<>();
-        for (ServeurDTO serveurDTO : applicationDTO.getServeurs()) {
-            Serveur serveur = ServeurMapping.serveurDTOTOServeur(serveurDTO);
-            serveurs.add(serveur);
+        if (applicationDTO.getServeurs() != null) {
+            for (ServeurDTO serveurDTO : applicationDTO.getServeurs()) {
+                Serveur serveur = ServeurMapping.serveurDTOTOServeur(serveurDTO);
+                serveurs.add(serveur);
+            }
         }
         application.setServeurs(serveurs);
 
         Collection<Cluster> clusters = new ArrayList<>();
-        for (ClusterDTO clusterDTO : applicationDTO.getClusters()) {
-            Cluster cluster = ClusterMapping.clusterDTOToCluster(clusterDTO);
-            clusters.add(cluster);
+        if (applicationDTO.getClusters() != null) {
+            for (ClusterDTO clusterDTO : applicationDTO.getClusters()) {
+                Cluster cluster = ClusterMapping.clusterDTOToCluster(clusterDTO);
+                clusters.add(cluster);
+            }
         }
         application.setCluster(clusters);
 
         return application;
     }
 
-    public static ApplicationDTO applicationTOApplicationDTO(Application application) {
+    // Convert Application to ApplicationDTO
+    public static ApplicationDTO applicationToApplicationDTO(Application application) {
         if (application != null) {
             ApplicationDTO applicationDTO = new ApplicationDTO();
-            applicationDTO.setId(application.getApplicationId());
+            applicationDTO.setApplicationId(application.getApplicationId());
             applicationDTO.setName(application.getName());
             applicationDTO.setDescription(application.getDescription());
             applicationDTO.setLienAcces(application.getLienAccees());
@@ -57,8 +63,13 @@ public class ApplicationMapping {
                 applicationDTO.setCategoryApp(categoryAppDTO);
             }
 
-            applicationDTO.setServeurs(ServeurMapping.serveursToServeurDTOs(application.getServeurs()));
-            applicationDTO.setClusters(ClusterMapping.clustersToClusterDTOs(application.getCluster()));
+            if (application.getServeurs() != null) {
+                applicationDTO.setServeurs(ServeurMapping.serveursToServeurDTOs(application.getServeurs()));
+            }
+
+            if (application.getCluster() != null) {
+                applicationDTO.setClusters(ClusterMapping.clustersToClusterDTOs(application.getCluster()));
+            }
 
             return applicationDTO;
         } else {
@@ -66,10 +77,11 @@ public class ApplicationMapping {
         }
     }
 
-    public static ApplicationDTO lazyApplicationTOApplicationDTO(Application application) {
+    // Convert Application to ApplicationDTO with minimal fields
+    public static ApplicationDTO lazyApplicationToApplicationDTO(Application application) {
         if (application != null) {
             ApplicationDTO applicationDTO = new ApplicationDTO();
-            applicationDTO.setId(application.getApplicationId());
+            applicationDTO.setApplicationId(application.getApplicationId());
             applicationDTO.setName(application.getName());
             applicationDTO.setDescription(application.getDescription());
             applicationDTO.setLienAcces(application.getLienAccees());
@@ -79,10 +91,11 @@ public class ApplicationMapping {
         }
     }
 
+    // Convert a collection of Application entities to a collection of ApplicationDTOs
     public static Collection<ApplicationDTO> applicationsToApplicationDTOs(Collection<Application> applications) {
         List<ApplicationDTO> applicationDTOs = new ArrayList<>();
         for (Application application : applications) {
-            ApplicationDTO applicationDTO = lazyApplicationTOApplicationDTO(application);
+            ApplicationDTO applicationDTO = lazyApplicationToApplicationDTO(application);
             applicationDTOs.add(applicationDTO);
         }
         return applicationDTOs;
