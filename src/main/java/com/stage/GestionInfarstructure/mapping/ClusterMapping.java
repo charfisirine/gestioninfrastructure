@@ -28,7 +28,7 @@ public class ClusterMapping {
         Collection<Application> applications = new ArrayList<>();
         if (clusterDTO.getApplications() != null) {
             for (ApplicationDTO applicationDTO : clusterDTO.getApplications()) {
-                Application application = ApplicationMapping.applicationDTOTOApplication(applicationDTO);
+                Application application = ApplicationMapping.applicationDTOToApplication(applicationDTO);
                 applications.add(application);
             }
         }

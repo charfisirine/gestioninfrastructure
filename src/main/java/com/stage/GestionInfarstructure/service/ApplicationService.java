@@ -31,18 +31,18 @@ public class ApplicationService {
     }
 
     public ApplicationDTO add(ApplicationDTO applicationDTO) {
-        Application application = ApplicationMapping.applicationDTOTOApplication(applicationDTO);
+        Application application = ApplicationMapping.applicationDTOToApplication(applicationDTO);
         application = applicationRepository.save(application);
-        return ApplicationMapping.applicationTOApplicationDTO(application);
+        return ApplicationMapping.applicationToApplicationDTO(application);
     }
 
     public ApplicationDTO update(ApplicationDTO applicationDTO) {
         Application applicationInBase = applicationRepository.findById(applicationDTO.getApplicationId()).orElse(null);
         Preconditions.checkArgument(applicationInBase != null, "Application has been deleted");
 
-        Application application = ApplicationMapping.applicationDTOTOApplication(applicationDTO);
+        Application application = ApplicationMapping.applicationDTOToApplication(applicationDTO);
         application = applicationRepository.save(application);
-        return ApplicationMapping.applicationTOApplicationDTO(application);
+        return ApplicationMapping.applicationToApplicationDTO(application);
     }
 
     public void deleteApplication(Integer id) {
