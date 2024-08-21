@@ -1,11 +1,9 @@
 package com.stage.GestionInfarstructure.domain;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class CategoryApp implements Serializable {
@@ -17,25 +15,13 @@ public class CategoryApp implements Serializable {
     private String name;
     private String description;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CategoryApp that)) return false;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
-
     @OneToMany(mappedBy = "categoryApp", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Collection<Application> applications;
-
 
     public CategoryApp() {
     }
 
+    // Getters and setters
     public Integer getId() {
         return id;
     }
@@ -58,5 +44,26 @@ public class CategoryApp implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Collection<Application> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(Collection<Application> applications) {
+        this.applications = applications;
+    }
+
+    // Override equals() and hashCode() for proper comparison and hashing
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CategoryApp that)) return false;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

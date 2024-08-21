@@ -4,6 +4,7 @@ import com.stage.GestionInfarstructure.domain.CategoryApp;
 import com.stage.GestionInfarstructure.dto.CategoryAppDTO;
 import com.stage.GestionInfarstructure.mapping.CategoryAppMapping;
 import com.stage.GestionInfarstructure.repository.CategoryAppRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,10 +38,20 @@ public class CategoryAppService {
     }
 
     public CategoryAppDTO update(CategoryAppDTO categoryAppDTO) {
-        CategoryApp categoryApp = CategoryAppMapping.categoryAppDTOToCategoryApp(categoryAppDTO);
-        categoryApp = categoryAppRepository.save(categoryApp);
-        return CategoryAppMapping.categoryAppToCategoryAppDTO(categoryApp);
+        // Récupérer l'entité existante
+        CategoryApp existingCategoryApp = categoryAppRepository.findById(categoryAppDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("CategoryApp non trouvé"));
+
+        // Mettre à jour les attributs de l'entité existante
+        existingCategoryApp.setName(categoryAppDTO.getName());
+        existingCategoryApp.setDescription(categoryAppDTO.getDescription());
+        // Conserver les applications existantes
+        // Si vous souhaitez gérer les applications, ajoutez ici la logique nécessaire
+
+        existingCategoryApp = categoryAppRepository.save(existingCategoryApp);
+        return CategoryAppMapping.categoryAppToCategoryAppDTO(existingCategoryApp);
     }
+
 
     public void deleteCategoryApp(Integer id) {
         categoryAppRepository.deleteById(id);
