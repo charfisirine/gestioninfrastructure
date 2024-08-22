@@ -8,7 +8,6 @@ public class ApplicationDTO {
     private Integer applicationId;
     private String name;
     private String description;
-    private String lienAcces;
     private Collection<ServeurDTO> serveurs = Collections.emptyList();
     private Collection<ClusterDTO> clusters = Collections.emptyList();
     private CategoryAppDTO categoryApp;
@@ -61,11 +60,5 @@ public class ApplicationDTO {
         this.description = description;
     }
 
-    public String getLienAcces() {
-        return lienAcces;
-    }
 
-    public void setLienAcces(String lienAcces) {
-        this.lienAcces = lienAcces;
-    }
 }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,9 +19,13 @@ public class Reseau implements Serializable {
 
     private String typeReseau;
 
-    @OneToMany(mappedBy = "reseau",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval=true)
+    @OneToMany(mappedBy = "reseau", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
     private Collection<SousReseau> sousReseaux;
+
+    @ManyToOne // Relation ManyToOne avec l'entité Site
+    @JoinColumn(name = "site_id", nullable = false) // Nom de la colonne de jointure
+    private Site site; // Attribut pour la relation avec Site
 
     public Reseau() {
     }
@@ -77,5 +80,13 @@ public class Reseau implements Serializable {
 
     public void setSousReseaux(Collection<SousReseau> sousReseaux) {
         this.sousReseaux = sousReseaux;
+    }
+
+    public Site getSite() {
+        return site;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
     }
 }

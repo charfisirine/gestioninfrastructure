@@ -14,7 +14,6 @@ public class Application implements Serializable {
 
     private String name;
     private String description;
-    private String lienAccees;
 
     @ManyToOne
     @JoinColumn(name = "categoryApplId")
@@ -63,13 +62,7 @@ public class Application implements Serializable {
         this.description = description;
     }
 
-    public String getLienAccees() {
-        return lienAccees;
-    }
 
-    public void setLienAccees(String lienAccees) {
-        this.lienAccees = lienAccees;
-    }
 
     public Collection<Serveur> getServeurs() {
         return serveurs;

@@ -21,7 +21,6 @@ public class ApplicationMapping {
         application.setApplicationId(applicationDTO.getApplicationId());
         application.setName(applicationDTO.getName());
         application.setDescription(applicationDTO.getDescription());
-        application.setLienAccees(applicationDTO.getLienAcces());
 
         if (applicationDTO.getCategoryApp() != null) {
             CategoryApp categoryApp = CategoryAppMapping.categoryAppDTOToCategoryApp(applicationDTO.getCategoryApp());
@@ -56,7 +55,6 @@ public class ApplicationMapping {
             applicationDTO.setApplicationId(application.getApplicationId());
             applicationDTO.setName(application.getName());
             applicationDTO.setDescription(application.getDescription());
-            applicationDTO.setLienAcces(application.getLienAccees());
 
             if (application.getCategoryApp() != null) {
                 CategoryAppDTO categoryAppDTO = CategoryAppMapping.categoryAppToCategoryAppDTO(application.getCategoryApp());
@@ -84,7 +82,6 @@ public class ApplicationMapping {
             applicationDTO.setApplicationId(application.getApplicationId());
             applicationDTO.setName(application.getName());
             applicationDTO.setDescription(application.getDescription());
-            applicationDTO.setLienAcces(application.getLienAccees());
             return applicationDTO;
         } else {
             return null;
