@@ -12,7 +12,7 @@ public class ClusterDTO {
     private String status;
     private String location;
     private Collection<ServeurDTO> serveurs;
-    private Collection<ApplicationDTO> applications;
+    private Collection<ClusterApplicationDTO> clusterApplications; // Ajouté pour la relation avec ClusterApplication
 
     // Getters et Setters
 
@@ -80,11 +80,11 @@ public class ClusterDTO {
         this.serveurs = serveurs;
     }
 
-    public Collection<ApplicationDTO> getApplications() {
-        return applications;
+    public Collection<ClusterApplicationDTO> getClusterApplications() { // Getter pour ClusterApplicationDTO
+        return clusterApplications;
     }
 
-    public void setApplications(Collection<ApplicationDTO> applications) {
-        this.applications = applications;
+    public void setClusterApplications(Collection<ClusterApplicationDTO> clusterApplications) { // Setter pour ClusterApplicationDTO
+        this.clusterApplications = clusterApplications;
     }
 }

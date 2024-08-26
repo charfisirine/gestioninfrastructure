@@ -32,19 +32,18 @@ public class ServeurMapping {
             serveur.setCluster(cluster);
         }
 
-        if (serveurDTO.getApplications() != null) {
-            Collection<Application> applications = new ArrayList<>();
-            for (ApplicationDTO applicationDTO : serveurDTO.getApplications()) {
-                Application application = ApplicationMapping.applicationDTOToApplication(applicationDTO);
-                applications.add(application);
+        if (serveurDTO.getServeurApplications() != null) {
+            Collection<ServeurApplication> serveurApplications = new ArrayList<>();
+            for (ServeurApplicationDTO serveurApplicationDTO : serveurDTO.getServeurApplications()) {
+                ServeurApplication serveurApplication = ServeurApplicationMapping.serveurApplicationDTOToServeurApplication(serveurApplicationDTO);
+                serveurApplications.add(serveurApplication);
             }
-            serveur.setApplications(applications);
+            serveur.setServeurApplications(serveurApplications);
         }
 
         return serveur;
     }
 
-    // Convert Serveur to ServeurDTO
     public static ServeurDTO serveurTOServeurDTO(Serveur serveur) {
         if (serveur == null) {
             return null;
@@ -57,27 +56,31 @@ public class ServeurMapping {
         serveurDTO.setStatus(serveur.getStatus());
         serveurDTO.setSpecification(serveur.getSpecification());
 
+        // Convertir la catégorie serveur si elle n'est pas nulle
         if (serveur.getCategoryServeur() != null) {
             CategoryServeurDTO categoryServeurDTO = CategoryServeurMapping.categoryServeurToCategoryServeurDTO(serveur.getCategoryServeur());
             serveurDTO.setCategoryServeur(categoryServeurDTO);
         }
 
+        // Convertir le cluster si elle n'est pas nulle
         if (serveur.getCluster() != null) {
             ClusterDTO clusterDTO = ClusterMapping.clusterToClusterDTO(serveur.getCluster());
             serveurDTO.setClusters(clusterDTO);
         }
 
-        if (serveur.getApplications() != null) {
-            Collection<ApplicationDTO> applicationDTOs = new ArrayList<>();
-            for (Application application : serveur.getApplications()) {
-                ApplicationDTO applicationDTO = ApplicationMapping.applicationToApplicationDTO(application);
-                applicationDTOs.add(applicationDTO);
+        // Convertir les applications serveur si elles ne sont pas nulles
+        if (serveur.getServeurApplications() != null) {
+            Collection<ServeurApplicationDTO> serveurApplicationDTOs = new ArrayList<>();
+            for (ServeurApplication serveurApplication : serveur.getServeurApplications()) {
+                ServeurApplicationDTO serveurApplicationDTO = ServeurApplicationMapping.serveurApplicationToServeurApplicationDTO(serveurApplication);
+                serveurApplicationDTOs.add(serveurApplicationDTO);
             }
-            serveurDTO.setApplications(applicationDTOs);
+            serveurDTO.setServeurApplications(serveurApplicationDTOs);
         }
 
         return serveurDTO;
     }
+
 
     // Convert Serveur to ServeurDTO with minimal fields
     public static ServeurDTO lazyServeurTOServeurDTO(Serveur serveur) {
@@ -98,7 +101,7 @@ public class ServeurMapping {
     public static Collection<ServeurDTO> serveursToServeurDTOs(Collection<Serveur> serveurs) {
         List<ServeurDTO> serveurDTOs = new ArrayList<>();
         for (Serveur serveur : serveurs) {
-            ServeurDTO serveurDTO = lazyServeurTOServeurDTO(serveur);
+            ServeurDTO serveurDTO = serveurTOServeurDTO(serveur);
             serveurDTOs.add(serveurDTO);
         }
         return serveurDTOs;

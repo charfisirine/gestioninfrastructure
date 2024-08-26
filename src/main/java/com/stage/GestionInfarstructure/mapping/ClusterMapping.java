@@ -2,10 +2,10 @@ package com.stage.GestionInfarstructure.mapping;
 
 import com.stage.GestionInfarstructure.domain.Cluster;
 import com.stage.GestionInfarstructure.dto.ClusterDTO;
-import com.stage.GestionInfarstructure.domain.Application;
 import com.stage.GestionInfarstructure.domain.Serveur;
-import com.stage.GestionInfarstructure.dto.ApplicationDTO;
 import com.stage.GestionInfarstructure.dto.ServeurDTO;
+import com.stage.GestionInfarstructure.domain.ClusterApplication;
+import com.stage.GestionInfarstructure.dto.ClusterApplicationDTO;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,16 +24,6 @@ public class ClusterMapping {
         cluster.setStatus(clusterDTO.getStatus());
         cluster.setLocation(clusterDTO.getLocation());
 
-        // Initialize applications if null
-        Collection<Application> applications = new ArrayList<>();
-        if (clusterDTO.getApplications() != null) {
-            for (ApplicationDTO applicationDTO : clusterDTO.getApplications()) {
-                Application application = ApplicationMapping.applicationDTOToApplication(applicationDTO);
-                applications.add(application);
-            }
-        }
-        cluster.setApplications(applications);
-
         // Initialize serveurs if null
         Collection<Serveur> serveurs = new ArrayList<>();
         if (clusterDTO.getServeurs() != null) {
@@ -44,6 +34,17 @@ public class ClusterMapping {
             }
         }
         cluster.setServeurs(serveurs);
+
+        // Initialize clusterApplications if null
+        Collection<ClusterApplication> clusterApplications = new ArrayList<>();
+        if (clusterDTO.getClusterApplications() != null) {
+            for (ClusterApplicationDTO clusterApplicationDTO : clusterDTO.getClusterApplications()) {
+                ClusterApplication clusterApplication = ClusterApplicationMapping.clusterApplicationDTOToClusterApplication(clusterApplicationDTO);
+                clusterApplications.add(clusterApplication);
+                clusterApplication.setCluster(cluster); // Set the cluster reference in ClusterApplication
+            }
+        }
+        cluster.setClusterApplications(clusterApplications); // Set the clusterApplications
 
         return cluster;
     }
@@ -60,11 +61,11 @@ public class ClusterMapping {
             clusterDTO.setStatus(cluster.getStatus());
             clusterDTO.setLocation(cluster.getLocation());
 
-            // Map the applications
-            clusterDTO.setApplications(ApplicationMapping.applicationsToApplicationDTOs(cluster.getApplications()));
-
             // Map the serveurs
             clusterDTO.setServeurs(ServeurMapping.serveursToServeurDTOs(cluster.getServeurs()));
+
+            // Map the cluster applications
+            clusterDTO.setClusterApplications(ClusterApplicationMapping.clusterApplicationsToClusterApplicationDTOs(cluster.getClusterApplications()));
 
             return clusterDTO;
         } else {

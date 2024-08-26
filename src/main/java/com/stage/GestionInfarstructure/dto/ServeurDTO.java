@@ -1,7 +1,5 @@
 package com.stage.GestionInfarstructure.dto;
 
-import com.stage.GestionInfarstructure.domain.CategoryServeur;
-
 import java.util.Collection;
 
 public class ServeurDTO {
@@ -12,8 +10,19 @@ public class ServeurDTO {
     private String status;
     private CategoryServeurDTO categoryServeur;
     private String specification;
-    private Collection<ApplicationDTO> applications;
     private ClusterDTO clusters;
+
+    // Ajout de la collection de ServeurApplicationDTO
+    private Collection<ServeurApplicationDTO> serveurApplications;
+
+    // Getters et setters pour la collection de ServeurApplicationDTO
+    public Collection<ServeurApplicationDTO> getServeurApplications() {
+        return serveurApplications;
+    }
+
+    public void setServeurApplications(Collection<ServeurApplicationDTO> serveurApplications) {
+        this.serveurApplications = serveurApplications;
+    }
 
     public CategoryServeurDTO getCategoryServeur() {
         return categoryServeur;
@@ -21,14 +30,6 @@ public class ServeurDTO {
 
     public void setCategoryServeur(CategoryServeurDTO categoryServeur) {
         this.categoryServeur = categoryServeur;
-    }
-
-    public Collection<ApplicationDTO> getApplications() {
-        return applications;
-    }
-
-    public void setApplications(Collection<ApplicationDTO> applications) {
-        this.applications = applications;
     }
 
     public ClusterDTO getClusters() {

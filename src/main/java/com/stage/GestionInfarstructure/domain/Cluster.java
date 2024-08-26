@@ -2,9 +2,9 @@ package com.stage.GestionInfarstructure.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 public class Cluster implements Serializable {
@@ -23,8 +23,6 @@ public class Cluster implements Serializable {
     @Column(name = "type", nullable = false)
     private String type;
 
-
-
     @Column(name = "role", nullable = false)
     private String role;
 
@@ -34,21 +32,25 @@ public class Cluster implements Serializable {
     @Column(name = "location", nullable = false)
     private String location;
 
-    @ManyToMany
-    @JoinTable(
-            name = "cluster_application",
-            joinColumns = @JoinColumn(name = "clusterId"),
-            inverseJoinColumns = @JoinColumn(name = "applicationId")
-    )
-    private Collection<Application> applications ;
-
     @OneToMany(mappedBy = "cluster", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore
     private Collection<Serveur> serveurs;
 
+    @OneToMany(mappedBy = "cluster", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
+    private Collection<ClusterApplication> clusterApplications;
 
     public Cluster() {
     }
+
+    public Integer getClusterId() {
+        return clusterId;
+    }
+
+    public void setClusterId(Integer clusterId) {
+        this.clusterId = clusterId;
+    }
+
     public String getName() {
         return name;
     }
@@ -56,32 +58,6 @@ public class Cluster implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public Collection<Application> getApplications() {
-        return applications;
-    }
-
-    public Collection<Serveur> getServeurs() {
-        return serveurs;
-    }
-
-    public void setServeurs(Collection<Serveur> serveurs) {
-        this.serveurs = serveurs;
-    }
-
-    public void setApplications(Collection<Application> applications) {
-        this.applications = applications;
-    }
-
-
 
     public String getDescription() {
         return description;
@@ -99,24 +75,17 @@ public class Cluster implements Serializable {
         this.type = type;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getStatus() {
         return status;
     }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Cluster cluster)) return false;
-        return Objects.equals(clusterId, cluster.clusterId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(clusterId);
-    }
-
-
 
     public void setStatus(String status) {
         this.status = status;
@@ -130,11 +99,31 @@ public class Cluster implements Serializable {
         this.location = location;
     }
 
-    public Integer getClusterId() {
-        return clusterId;
+    public Collection<Serveur> getServeurs() {
+        return serveurs;
     }
 
-    public void setClusterId(Integer clusterId) {
-        this.clusterId = clusterId;
+    public void setServeurs(Collection<Serveur> serveurs) {
+        this.serveurs = serveurs;
+    }
+
+    public Collection<ClusterApplication> getClusterApplications() {
+        return clusterApplications;
+    }
+
+    public void setClusterApplications(Collection<ClusterApplication> clusterApplications) {
+        this.clusterApplications = clusterApplications;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cluster cluster)) return false;
+        return Objects.equals(clusterId, cluster.clusterId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clusterId);
     }
 }

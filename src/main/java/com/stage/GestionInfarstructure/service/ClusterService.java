@@ -33,6 +33,7 @@ public class ClusterService {
     }
 
     public ClusterDTO add(ClusterDTO clusterDTO) {
+        Preconditions.checkArgument(clusterDTO.getId() == null, "Cluster ID must be null for new entries");
         Cluster cluster = ClusterMapping.clusterDTOToCluster(clusterDTO);
         cluster = clusterRepository.save(cluster);
         return ClusterMapping.clusterToClusterDTO(cluster);
@@ -48,6 +49,7 @@ public class ClusterService {
     }
 
     public void deleteCluster(Integer id) {
+        Preconditions.checkArgument(clusterRepository.existsById(id), "Cluster not found for deletion");
         clusterRepository.deleteById(id);
     }
 }

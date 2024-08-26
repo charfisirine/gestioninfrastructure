@@ -1,32 +1,15 @@
 package com.stage.GestionInfarstructure.dto;
 
 import java.util.Collection;
-import java.util.Collections;
 
 public class ApplicationDTO {
 
     private Integer applicationId;
     private String name;
     private String description;
-    private Collection<ServeurDTO> serveurs = Collections.emptyList();
-    private Collection<ClusterDTO> clusters = Collections.emptyList();
     private CategoryAppDTO categoryApp;
-
-    public Collection<ServeurDTO> getServeurs() {
-        return serveurs;
-    }
-
-    public void setServeurs(Collection<ServeurDTO> serveurs) {
-        this.serveurs = serveurs;
-    }
-
-    public Collection<ClusterDTO> getClusters() {
-        return clusters;
-    }
-
-    public void setClusters(Collection<ClusterDTO> clusters) {
-        this.clusters = clusters;
-    }
+    private Collection<ServeurApplicationDTO> serveurApplications; // Collection pour ServeurApplicationDTO
+    private Collection<ClusterApplicationDTO> clusterApplications; // Collection pour ClusterApplicationDTO
 
     public CategoryAppDTO getCategoryApp() {
         return categoryApp;
@@ -60,5 +43,19 @@ public class ApplicationDTO {
         this.description = description;
     }
 
+    public Collection<ServeurApplicationDTO> getServeurApplications() {
+        return serveurApplications;
+    }
 
+    public void setServeurApplications(Collection<ServeurApplicationDTO> serveurApplications) {
+        this.serveurApplications = serveurApplications;
+    }
+
+    public Collection<ClusterApplicationDTO> getClusterApplications() {
+        return clusterApplications;
+    }
+
+    public void setClusterApplications(Collection<ClusterApplicationDTO> clusterApplications) {
+        this.clusterApplications = clusterApplications;
+    }
 }

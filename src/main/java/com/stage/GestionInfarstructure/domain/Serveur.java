@@ -29,6 +29,10 @@ public class Serveur implements Serializable {
     @JoinColumn(name = "idSousReseau")
     private SousReseau sousReseau;
 
+    // Ajout de la relation OneToMany avec ServeurApplication
+    @OneToMany(mappedBy = "serveur", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<ServeurApplication> serveurApplications;
+
     public Integer getServeurId() {
         return serveurId;
     }
@@ -37,21 +41,11 @@ public class Serveur implements Serializable {
         this.serveurId = serveurId;
     }
 
-    @ManyToMany
-    @JoinTable(
-            name = "Serveur_Application",
-            joinColumns = @JoinColumn(name = "serveurId"),
-            inverseJoinColumns = @JoinColumn(name = "applicationId")
-    )
-    private Collection<Application> applications;
-
-
-    // Getters et setters
-
+    // Constructeur par défaut
     public Serveur() {
     }
 
-
+    // Getters et setters pour les autres champs
     public String getHostName() {
         return hostName;
     }
@@ -108,12 +102,12 @@ public class Serveur implements Serializable {
         this.sousReseau = sousReseau;
     }
 
-    public Collection<Application> getApplications() {
-        return applications;
+    public Collection<ServeurApplication> getServeurApplications() {
+        return serveurApplications;
     }
 
-    public void setApplications(Collection<Application> applications) {
-        this.applications = applications;
+    public void setServeurApplications(Collection<ServeurApplication> serveurApplications) {
+        this.serveurApplications = serveurApplications;
     }
 
     @Override

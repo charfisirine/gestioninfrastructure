@@ -19,16 +19,13 @@ public class Application implements Serializable {
     @JoinColumn(name = "categoryApplId")
     private CategoryApp categoryApp;
 
-    @ManyToMany
-    @JoinTable(
-            name = "Serveur_Application",
-            joinColumns = @JoinColumn(name = "applicationId"),
-            inverseJoinColumns = @JoinColumn(name = "serveurId")
-    )
-    private Collection<Serveur> serveurs;
+    // Relation One-to-Many avec ServeurApplication
+    @OneToMany(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<ServeurApplication> serveurApplications;
 
-    @ManyToMany(mappedBy = "applications")
-    private Collection<Cluster> cluster;
+    // Relation One-to-Many avec ClusterApplication
+    @OneToMany(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<ClusterApplication> clusterApplications;
 
     public CategoryApp getCategoryApp() {
         return categoryApp;
@@ -62,22 +59,20 @@ public class Application implements Serializable {
         this.description = description;
     }
 
-
-
-    public Collection<Serveur> getServeurs() {
-        return serveurs;
+    public Collection<ServeurApplication> getServeurApplications() {
+        return serveurApplications;
     }
 
-    public void setServeurs(Collection<Serveur> serveurs) {
-        this.serveurs = serveurs;
+    public void setServeurApplications(Collection<ServeurApplication> serveurApplications) {
+        this.serveurApplications = serveurApplications;
     }
 
-    public Collection<Cluster> getCluster() {
-        return cluster;
+    public Collection<ClusterApplication> getClusterApplications() {
+        return clusterApplications;
     }
 
-    public void setCluster(Collection<Cluster> cluster) {
-        this.cluster = cluster;
+    public void setClusterApplications(Collection<ClusterApplication> clusterApplications) {
+        this.clusterApplications = clusterApplications;
     }
 
     @Override
