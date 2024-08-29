@@ -11,7 +11,7 @@ spring:
     livereload:
       enabled: true
   datasource:
-    url: jdbc:mysql://localhost:3306/gestioninfrastructure
+    url: jdbc:mysql://localhost:3306/Gestion-infrastructure
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver

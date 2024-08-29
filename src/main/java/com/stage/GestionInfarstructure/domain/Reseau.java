@@ -23,9 +23,9 @@ public class Reseau implements Serializable {
     @JsonIgnore
     private Collection<SousReseau> sousReseaux;
 
-    @ManyToOne // Relation ManyToOne avec l'entité Site
-    @JoinColumn(name = "site_id", nullable = false) // Nom de la colonne de jointure
-    private Site site; // Attribut pour la relation avec Site
+    @ManyToOne
+    @JoinColumn(name = "site_id", nullable = false)
+    private Site site;
 
     public Reseau() {
     }

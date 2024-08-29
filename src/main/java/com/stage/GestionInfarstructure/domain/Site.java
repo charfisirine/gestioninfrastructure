@@ -20,7 +20,6 @@ public class Site implements Serializable {
     public Site() {
     }
 
-    // Getters and setters
     public Integer getId() {
         return id;
     }

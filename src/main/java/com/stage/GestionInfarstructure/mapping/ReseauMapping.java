@@ -16,10 +16,17 @@ public class ReseauMapping {
         Reseau reseau = new Reseau();
         reseau.setIdReseau(reseauDTO.getIdReseau());
         reseau.setName(reseauDTO.getName());
-        reseau.setIpRange(reseauDTO.getIpRange());
+
+        // Validate ipRange before setting it
+        if (isValidIpRange(reseauDTO.getIpRange())) {
+            reseau.setIpRange(reseauDTO.getIpRange());
+        } else {
+            throw new IllegalArgumentException("Invalid IP range format.");
+        }
+
         reseau.setTypeReseau(reseauDTO.getTypeReseau());
 
-        // Gérer les sous-réseaux
+        // Handle sous-reseaux
         Collection<SousReseau> sousreseaux = new ArrayList<>();
         for (SousReseauDTO sousReseauDTO : reseauDTO.getSousReseaux()) {
             SousReseau sousreseau = SousReseauMapping.sousReseauDTOTOSousReseau(sousReseauDTO);
@@ -28,13 +35,20 @@ public class ReseauMapping {
         }
         reseau.setSousReseaux(sousreseaux);
 
-        // Gérer le site
+        // Handle site
         if (reseauDTO.getSite() != null) {
-            reseau.setSite(SiteMapping.siteDTOToSite(reseauDTO.getSite())); // Mapper le site
+            reseau.setSite(SiteMapping.siteDTOToSite(reseauDTO.getSite()));
         }
 
         return reseau;
     }
+
+    // Add the isValidIpRange method here
+    public static boolean isValidIpRange(String ipRange) {
+        String ipPattern = "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([1-9]|[1-2][0-9]|3[0-2]))?$";
+        return ipRange != null && ipRange.matches(ipPattern);
+    }
+
 
     public static ReseauDTO reseauTOreseauDTO(Reseau reseau) {
         if (reseau != null) {

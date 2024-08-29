@@ -18,7 +18,13 @@ public class ServeurMapping {
         Serveur serveur = new Serveur();
         serveur.setServeurId(serveurDTO.getServeurId());
         serveur.setHostName(serveurDTO.getHostName());
+
+        // Validation de l'adresse IP
+        if (!isValidIpAddress(serveurDTO.getAdresseIp())) {
+            throw new IllegalArgumentException("Invalid IP address format");
+        }
         serveur.setAddressIp(serveurDTO.getAdresseIp());
+
         serveur.setStatus(serveurDTO.getStatus());
         serveur.setSpecification(serveurDTO.getSpecification());
 
@@ -42,6 +48,10 @@ public class ServeurMapping {
         }
 
         return serveur;
+    }
+    private static boolean isValidIpAddress(String ipAddress) {
+        String ipPattern = "^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$";
+        return ipAddress != null && ipAddress.matches(ipPattern);
     }
 
     public static ServeurDTO serveurTOServeurDTO(Serveur serveur) {
@@ -82,6 +92,7 @@ public class ServeurMapping {
     }
 
 
+
     // Convert Serveur to ServeurDTO with minimal fields
     public static ServeurDTO lazyServeurTOServeurDTO(Serveur serveur) {
         if (serveur == null) {
@@ -106,4 +117,7 @@ public class ServeurMapping {
         }
         return serveurDTOs;
     }
+
+
+
 }

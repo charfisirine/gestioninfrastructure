@@ -1,15 +1,26 @@
 package com.stage.GestionInfarstructure.dto;
 
 import java.util.Collection;
-
+import jakarta.validation.constraints.Pattern;
 public class SousReseauDTO {
 
     private Integer idSousReseau;
-    private Integer idReseau;  // Ajouté pour correspondre à `idReseau` dans la classe domaine
-    private String CIDRnotation;  // Ajouté pour correspondre à `CIDRnotation` dans la classe domaine
-    private String masqueSousReseau;
+    private Integer idReseau;
+    @Pattern(regexp = "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([1-9]|[1-2][0-9]|3[0-2]))?$",
+            message = "Invalid IP Range format")
     private String ipRange;
-    private String gateway;  // Ajouté pour correspondre à `gateway` dans la classe domaine
+
+    @Pattern(regexp = "^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$",
+            message = "Invalid Gateway format")
+    private String gateway;
+
+    @Pattern(regexp = "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([1-9]|[1-2][0-9]|3[0-2]))?$",
+            message = "Invalid CIDR notation format")
+    private String CIDRnotation;
+
+    @Pattern(regexp = "^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$",
+            message = "Invalid  masque sous reseau format")
+    private String masqueSousReseau;
     private Collection<ServeurDTO> serveurs;
 
     // Getters and Setters
