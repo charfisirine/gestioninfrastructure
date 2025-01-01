@@ -22,16 +22,14 @@ public class SousReseau implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idReseau")
-
     private Reseau reseau;
 
-
-    @OneToMany(mappedBy = "sousReseau", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    // Change ici : @OneToMany avec cascade et orphanRemoval
+    @OneToMany(mappedBy = "sousReseau", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private Collection<Serveur> serveurs;
 
     // Getters et setters
-
 
     public Integer getIdSousReseau() {
         return idSousReseau;
@@ -95,6 +93,14 @@ public class SousReseau implements Serializable {
 
     public void setServeurs(Collection<Serveur> serveurs) {
         this.serveurs = serveurs;
+    }
+
+    // Change ici : méthode pour dissocier un serveur
+    public void removeServeur(Serveur serveur) {
+        if (serveurs != null && serveurs.contains(serveur)) {
+            serveurs.remove(serveur);
+            serveur.setSousReseau(null);  // Change ici : dissociation du côté de Serveur
+        }
     }
 
     @Override
