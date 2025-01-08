@@ -36,6 +36,11 @@ public class ClusterApplicationMapping {
         return clusterApplication;
     }
 
+
+
+
+
+
     // Convert ClusterApplication to ClusterApplicationDTO
     public static ClusterApplicationDTO clusterApplicationToClusterApplicationDTO(ClusterApplication clusterApplication) {
         if (clusterApplication == null) {
@@ -46,18 +51,40 @@ public class ClusterApplicationMapping {
         clusterApplicationDTO.setId(clusterApplication.getId());
         clusterApplicationDTO.setStatus(clusterApplication.getStatus());
 
+        // Avoid circular dependency by mapping only the necessary fields
         if (clusterApplication.getApplication() != null) {
-            ApplicationDTO applicationDTO = ApplicationMapping.applicationToApplicationDTO(clusterApplication.getApplication());
+            ApplicationDTO applicationDTO = new ApplicationDTO();
+            applicationDTO.setApplicationId(clusterApplication.getApplication().getApplicationId());
+            applicationDTO.setName(clusterApplication.getApplication().getName());
+            // Map other necessary fields
             clusterApplicationDTO.setApplication(applicationDTO);
         }
 
         if (clusterApplication.getCluster() != null) {
-            ClusterDTO clusterDTO = ClusterMapping.clusterToClusterDTO(clusterApplication.getCluster());
+            ClusterDTO clusterDTO = new ClusterDTO();
+            clusterDTO.setId(clusterApplication.getCluster().getClusterId());
+            clusterDTO.setName(clusterApplication.getCluster().getName());
+            // Map other necessary fields
             clusterApplicationDTO.setCluster(clusterDTO);
         }
 
         return clusterApplicationDTO;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Convert a collection of ClusterApplication entities to a collection of ClusterApplicationDTOs
     public static Collection<ClusterApplicationDTO> clusterApplicationsToClusterApplicationDTOs(Collection<ClusterApplication> clusterApplications) {

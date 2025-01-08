@@ -1,11 +1,18 @@
 package com.stage.GestionInfarstructure.mapping;
 
-import com.stage.GestionInfarstructure.domain.*;
-import com.stage.GestionInfarstructure.dto.*;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.stage.GestionInfarstructure.domain.CategoryServeur;
+import com.stage.GestionInfarstructure.domain.Cluster;
+import com.stage.GestionInfarstructure.domain.Serveur;
+import com.stage.GestionInfarstructure.domain.ServeurApplication;
+import com.stage.GestionInfarstructure.dto.CategoryServeurDTO;
+import com.stage.GestionInfarstructure.dto.ClusterDTO;
+import com.stage.GestionInfarstructure.dto.ServeurApplicationDTO;
+import com.stage.GestionInfarstructure.dto.ServeurDTO;
 
 public class ServeurMapping {
 
@@ -49,6 +56,7 @@ public class ServeurMapping {
 
         return serveur;
     }
+
     private static boolean isValidIpAddress(String ipAddress) {
         String ipPattern = "^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$";
         return ipAddress != null && ipAddress.matches(ipPattern);
@@ -66,34 +74,29 @@ public class ServeurMapping {
         serveurDTO.setStatus(serveur.getStatus());
         serveurDTO.setSpecification(serveur.getSpecification());
 
-        // Convertir la catégorie serveur si elle n'est pas nulle
         if (serveur.getCategoryServeur() != null) {
             CategoryServeurDTO categoryServeurDTO = CategoryServeurMapping.categoryServeurToCategoryServeurDTO(serveur.getCategoryServeur());
             serveurDTO.setCategoryServeur(categoryServeurDTO);
         }
 
-        // Convertir le cluster si elle n'est pas nulle
         if (serveur.getCluster() != null) {
-            ClusterDTO clusterDTO = ClusterMapping.clusterToClusterDTO(serveur.getCluster());
+            ClusterDTO clusterDTO = new ClusterDTO();
+            clusterDTO.setId(serveur.getCluster().getClusterId());
+            clusterDTO.setName(serveur.getCluster().getName());
+
             serveurDTO.setClusters(clusterDTO);
         }
 
-        // Convertir les applications serveur si elles ne sont pas nulles
         if (serveur.getServeurApplications() != null) {
-            Collection<ServeurApplicationDTO> serveurApplicationDTOs = new ArrayList<>();
-            for (ServeurApplication serveurApplication : serveur.getServeurApplications()) {
-                ServeurApplicationDTO serveurApplicationDTO = ServeurApplicationMapping.serveurApplicationToServeurApplicationDTO(serveurApplication);
-                serveurApplicationDTOs.add(serveurApplicationDTO);
-            }
-            serveurDTO.setServeurApplications(serveurApplicationDTOs);
+            List<ServeurApplicationDTO> applicationDTOs = serveur.getServeurApplications().stream()
+                    .map(ServeurApplicationMapping::serveurApplicationToServeurApplicationDTO)
+                    .collect(Collectors.toList());
+            serveurDTO.setServeurApplications(applicationDTOs);
         }
 
         return serveurDTO;
     }
 
-
-
-    // Convert Serveur to ServeurDTO with minimal fields
     public static ServeurDTO lazyServeurTOServeurDTO(Serveur serveur) {
         if (serveur == null) {
             return null;

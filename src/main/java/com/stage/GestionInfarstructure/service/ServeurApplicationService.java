@@ -30,6 +30,12 @@ public class ServeurApplicationService {
         return ServeurApplicationMapping.serveurApplicationsToServeurApplicationDTOs(result);
     }
 
+
+
+
+
+
+
     public ServeurApplicationDTO add(ServeurApplicationDTO serveurApplicationDTO) {
         ServeurApplication serveurApplication = ServeurApplicationMapping.serveurApplicationDTOToServeurApplication(serveurApplicationDTO);
         serveurApplication = serveurApplicationRepository.save(serveurApplication);

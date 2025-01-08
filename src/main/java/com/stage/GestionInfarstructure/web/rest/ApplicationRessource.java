@@ -22,28 +22,25 @@ import java.util.Collection;
 
 import com.stage.GestionInfarstructure.util.RestPreconditions;
 
-
 @RestController
 @RequestMapping("/api/applications")
 public class ApplicationRessource {
     private final ApplicationService applicationService;
-    private  final String ENTITY_NAME = "Application";
+    private final String ENTITY_NAME = "Application";
 
     public ApplicationRessource(ApplicationService applicationService) {
         this.applicationService = applicationService;
     }
+
     @GetMapping
     public Collection<ApplicationDTO> findAll() {
-
         return applicationService.findAll();
     }
 
     @GetMapping("/{id}")
     public Application findOne(@PathVariable Integer id) {
         Application application = applicationService.findOne(id);
-
-        RestPreconditions.checkFound(application, ENTITY_NAME+"Reseau not found");
-
+        RestPreconditions.checkFound(application, ENTITY_NAME + " not found");
         return application;
     }
 
@@ -58,10 +55,6 @@ public class ApplicationRessource {
         ApplicationDTO result = applicationService.add(application);
         return ResponseEntity.created(new URI("/api/applications/" + result.getApplicationId())).body(result);
     }
-
-
-
-
 
     @PutMapping("/{id}")
     public ResponseEntity<ApplicationDTO> updateApplication(@PathVariable Integer id, @RequestBody ApplicationDTO applicationDTO, BindingResult bindingResults)
@@ -80,13 +73,9 @@ public class ApplicationRessource {
         return ResponseEntity.ok(result);
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteApplication(@PathVariable Integer id) {
         applicationService.deleteApplication(id);
         return ResponseEntity.ok().build();
     }
-
-
-
 }

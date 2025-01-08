@@ -10,6 +10,7 @@ import com.stage.GestionInfarstructure.dto.ServeurApplicationDTO;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ApplicationMapping {
 
@@ -33,7 +34,7 @@ public class ApplicationMapping {
         return application;
     }
 
-    // Convert Application to ApplicationDTO
+    // Convert Application to ApplicationDTO with selected fields
     public static ApplicationDTO applicationToApplicationDTO(Application application) {
         if (application == null) {
             return null;
@@ -44,22 +45,10 @@ public class ApplicationMapping {
         applicationDTO.setName(application.getName());
         applicationDTO.setDescription(application.getDescription());
 
-        // Map CategoryApp
+        // Map CategoryApp if exists
         if (application.getCategoryApp() != null) {
             CategoryAppDTO categoryAppDTO = CategoryAppMapping.categoryAppToCategoryAppDTO(application.getCategoryApp());
             applicationDTO.setCategoryApp(categoryAppDTO);
-        }
-
-        // Convert and set ServeurApplications
-        if (application.getServeurApplications() != null) {
-            Collection<ServeurApplicationDTO> serveurDTOs = ServeurApplicationMapping.serveurApplicationsToServeurApplicationDTOs(application.getServeurApplications());
-            applicationDTO.setServeurApplications(serveurDTOs);
-        }
-
-        // Convert and set ClusterApplications
-        if (application.getClusterApplications() != null) {
-            Collection<ClusterApplicationDTO> clusterDTOs = ClusterApplicationMapping.clusterApplicationsToClusterApplicationDTOs(application.getClusterApplications());
-            applicationDTO.setClusterApplications(clusterDTOs);
         }
 
         return applicationDTO;
@@ -75,8 +64,32 @@ public class ApplicationMapping {
         applicationDTO.setApplicationId(application.getApplicationId());
         applicationDTO.setName(application.getName());
         applicationDTO.setDescription(application.getDescription());
+
+        // Map CategoryApp if exists
+        if (application.getCategoryApp() != null) {
+            CategoryAppDTO categoryAppDTO = CategoryAppMapping.categoryAppToCategoryAppDTO(application.getCategoryApp());
+            applicationDTO.setCategoryApp(categoryAppDTO);
+        }
+
+        // Map ServeurApplications if exists
+        if (application.getServeurApplications() != null && !application.getServeurApplications().isEmpty()) {
+            Collection<ServeurApplicationDTO> serveurApplicationDTOs = application.getServeurApplications().stream()
+                    .map(serveurApplication -> ServeurApplicationMapping.serveurApplicationToServeurApplicationDTO(serveurApplication))
+                    .collect(Collectors.toList());
+            applicationDTO.setServeurApplications(serveurApplicationDTOs);
+        }
+
+        // Map ClusterApplications if exists
+        if (application.getClusterApplications() != null && !application.getClusterApplications().isEmpty()) {
+            Collection<ClusterApplicationDTO> clusterApplicationDTOs = application.getClusterApplications().stream()
+                    .map(clusterApplication -> ClusterApplicationMapping.clusterApplicationToClusterApplicationDTO(clusterApplication))
+                    .collect(Collectors.toList());
+            applicationDTO.setClusterApplications(clusterApplicationDTOs);
+        }
+
         return applicationDTO;
     }
+
 
     // Convert a collection of Application entities to a collection of ApplicationDTOs
     public static Collection<ApplicationDTO> applicationsToApplicationDTOs(Collection<Application> applications) {

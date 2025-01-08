@@ -1,5 +1,7 @@
 package com.stage.GestionInfarstructure.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Collection;
 
 public class ClusterDTO {
@@ -10,7 +12,10 @@ public class ClusterDTO {
     private String type;
     private String role;  // Ajouté pour correspondre à `role` dans la classe domaine
     private String status;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL) // ken null yna7iha wa7dou
     private String location;
+
     private Collection<ServeurDTO> serveurs;
     private Collection<ClusterApplicationDTO> clusterApplications; // Ajouté pour la relation avec ClusterApplication
 

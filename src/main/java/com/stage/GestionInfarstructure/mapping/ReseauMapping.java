@@ -1,13 +1,17 @@
 package com.stage.GestionInfarstructure.mapping;
 
 import com.stage.GestionInfarstructure.domain.Reseau;
+import com.stage.GestionInfarstructure.domain.Serveur;
 import com.stage.GestionInfarstructure.domain.SousReseau;
 import com.stage.GestionInfarstructure.dto.ReseauDTO;
+import com.stage.GestionInfarstructure.dto.ServeurDTO;
+import com.stage.GestionInfarstructure.dto.SiteDTO;
 import com.stage.GestionInfarstructure.dto.SousReseauDTO;
 import com.stage.GestionInfarstructure.mapping.SiteMapping; // Ajoutez cette importation
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ReseauMapping {
@@ -77,6 +81,46 @@ public class ReseauMapping {
             reseauDTO.setName(reseau.getName());
             reseauDTO.setIpRange(reseau.getIpRange());
             reseauDTO.setTypeReseau(reseau.getTypeReseau());
+
+            if (reseau.getSite() != null) {
+                SiteDTO siteDTO = new SiteDTO();
+                siteDTO.setId(reseau.getSite().getId());
+                siteDTO.setDesignation(reseau.getSite().getDesignation());
+                reseauDTO.setSite(siteDTO);
+            } else {
+                reseauDTO.setSite(null);
+            }
+
+            if (reseau.getSousReseaux() != null && !reseau.getSousReseaux().isEmpty()) {
+                List<SousReseauDTO> sousReseauxDTOs = new ArrayList<>();
+                for (SousReseau sousReseau : reseau.getSousReseaux()) {
+                    SousReseauDTO sousReseauDTO = new SousReseauDTO();
+                    sousReseauDTO.setIdSousReseau(sousReseau.getIdSousReseau());
+                    sousReseauDTO.setIdReseau(sousReseau.getIdReseau());
+                    sousReseauDTO.setIpRange(sousReseau.getIpRange());
+                    sousReseauDTO.setGateway(sousReseau.getGateway());
+                    sousReseauDTO.setCIDRnotation(sousReseau.getCIDRnotation());
+                    sousReseauDTO.setMasqueSousReseau(sousReseau.getMasqueSousReseau());
+                    if (sousReseau.getServeurs() != null && !sousReseau.getServeurs().isEmpty()) {
+                        List<ServeurDTO> serveurDTOs = new ArrayList<>();
+                        for (Serveur serveur : sousReseau.getServeurs()) {
+                            ServeurDTO serveurDTO = new ServeurDTO();
+                            serveurDTO.setServeurId(serveur.getServeurId());
+                            serveurDTO.setHostName(serveur.getHostName());
+                            serveurDTO.setAdresseIp(serveur.getAddressIp());
+                            serveurDTOs.add(serveurDTO);
+                        }
+                        sousReseauDTO.setServeurs(serveurDTOs);
+                    } else {
+                        sousReseauDTO.setServeurs(Collections.emptyList());
+                    }
+                    sousReseauxDTOs.add(sousReseauDTO);
+                }
+                reseauDTO.setSousReseaux(sousReseauxDTOs);
+            } else {
+                reseauDTO.setSousReseaux(Collections.emptyList());
+            }
+
             return reseauDTO;
         } else {
             return null;

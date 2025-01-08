@@ -20,15 +20,21 @@ public class SiteMapping {
     }
 
     // Convertir Site en SiteDTO
+
     public static SiteDTO siteToSiteDTO(Site site) {
-        if (site == null) {
+        if (site != null) {
+            SiteDTO siteDTO = new SiteDTO();
+            siteDTO.setId(site.getId());
+            siteDTO.setDesignation(site.getDesignation()); // Assurez-vous que la désignation est mappée.
+            return siteDTO;
+        } else {
             return null;
         }
-        SiteDTO siteDTO = new SiteDTO();
-        siteDTO.setId(site.getId());
-        siteDTO.setDesignation(site.getDesignation());
-        return siteDTO;
     }
+
+
+
+
 
     // Convertir une Collection de Site en Collection de SiteDTO
     public static Collection<SiteDTO> sitesToSiteDTOs(Collection<Site> sites) {

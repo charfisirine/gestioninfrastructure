@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
-@Service  // Add this annotation to make the class a Spring service bean
+@Service
 public class ApplicationService {
 
     private final ApplicationRepository applicationRepository;

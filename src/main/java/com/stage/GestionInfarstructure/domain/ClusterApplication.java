@@ -1,7 +1,6 @@
 package com.stage.GestionInfarstructure.domain;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.io.Serializable;
 import java.util.Objects;
